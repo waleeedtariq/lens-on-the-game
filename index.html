@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LENS ON THE GAME — Waleed</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d0d0f;color:#e8e8e8;font-family:'DM Sans',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:1.5px}
+
+  /* HEADER */
+  .header{background:linear-gradient(160deg,#0d0d0f 0%,#180008 55%,#0d0d0f 100%);border-bottom:2px solid #cc2222;padding:44px 24px 36px;position:relative;overflow:hidden;text-align:center}
+  .header::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 48px,rgba(255,45,45,.03) 48px,rgba(255,45,45,.03) 49px);pointer-events:none}
+  .header-eyebrow{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:5px;color:#cc2222;font-weight:600;text-transform:uppercase;margin-bottom:18px;opacity:.9}
+  .header-title{font-family:'Bebas Neue',sans-serif;font-size:64px;font-weight:400;letter-spacing:4px;text-transform:uppercase;line-height:1;color:#f5f5f5}
+  .header-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:16px 0 12px}
+  .header-divider-line{height:1px;width:40px;background:#cc2222;opacity:.7}
+  .header-byline{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:5px;color:#cc2222;font-weight:600;text-transform:uppercase}
+  .header-sub{font-family:'Inter',sans-serif;font-size:12px;color:#666;margin-top:4px;font-weight:400;letter-spacing:2px;text-transform:uppercase}
+
+  /* TABS */
+  .tabs{display:flex;overflow-x:auto;background:#0f0f12;border-bottom:1px solid #1c1c24;scrollbar-width:none;padding:0 8px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{background:transparent;color:#555;border:none;padding:14px 16px;cursor:pointer;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;flex-shrink:0}
+  .tab:hover{color:#aaa}
+  .tab.active{color:#f5f5f5;border-bottom-color:#cc2222;background:rgba(204,34,34,.05)}
+
+  /* CONTENT */
+  .content{display:none;padding:28px 20px 48px;max-width:760px;margin:0 auto}
+  .content.active{display:block}
+
+  /* SECTION TITLE */
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:28px;font-weight:400;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;color:#f0f0f0}
+  .section-title-bar{height:2px;width:32px;background:#cc2222;margin-bottom:20px;opacity:.8}
+
+  /* CARDS */
+  .card{background:#111115;border:1px solid #1e1e28;border-radius:10px;padding:20px;margin-bottom:14px}
+  .card-accent{border-top:2px solid var(--accent,#cc2222)}
+  .card-label{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent,#cc2222);margin-bottom:12px;opacity:.9}
+
+  /* PRIORITY BADGE */
+  .badge{display:inline-block;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;padding:5px 14px;border-radius:20px;text-transform:uppercase;color:#000;margin-bottom:14px}
+
+  /* SHOT CARD */
+  .shot-card{background:#111115;border:1px solid #1e1e28;border-radius:10px;padding:18px 20px;margin-bottom:10px}
+  .shot-name{font-family:'Bebas Neue',sans-serif;font-size:20px;font-weight:400;letter-spacing:1.5px;margin-bottom:5px;color:#f0f0f0}
+  .shot-angle{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase}
+  .shot-desc{font-family:'DM Sans',sans-serif;font-size:14px;color:#aaa;line-height:1.7;margin-bottom:8px}
+  .shot-example{font-family:'DM Sans',sans-serif;font-size:13px;color:#555;font-style:italic}
+
+  /* GEAR ROW */
+  .gear-row{background:#111115;border:1px solid #1e1e28;border-left:2px solid #cc2222;border-radius:0 8px 8px 0;padding:16px 18px;margin-bottom:10px}
+  .gear-setting{font-family:'Inter',sans-serif;font-size:10px;color:#cc2222;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;opacity:.9}
+  .gear-value{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px;color:#e8e8e8}
+  .gear-why{font-family:'DM Sans',sans-serif;font-size:13px;color:#666;line-height:1.6}
+
+  /* TIMELINE ROW */
+  .timeline-row{display:flex;border-radius:10px;overflow:hidden;border:1px solid #1e1e28;margin-bottom:8px}
+  .timeline-time{display:flex;align-items:center;justify-content:center;text-align:center;min-width:68px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#fff;padding:16px 8px;line-height:1.3;letter-spacing:.5px}
+  .timeline-body{background:#111115;padding:16px 18px;flex:1}
+  .timeline-label{font-family:'Bebas Neue',sans-serif;font-size:17px;font-weight:400;letter-spacing:1.5px;margin-bottom:4px}
+  .timeline-desc{font-family:'DM Sans',sans-serif;font-size:13px;color:#999;line-height:1.6}
+
+  /* MIC ROW */
+  .mic-row{background:#111115;border:1px solid #1e1e28;border-left:2px solid #e07b00;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:10px}
+  .mic-moment{font-family:'Bebas Neue',sans-serif;font-size:18px;font-weight:400;letter-spacing:1px;margin-bottom:4px;color:#f0f0f0}
+  .mic-when{font-family:'Inter',sans-serif;font-size:11px;color:#e07b00;margin-bottom:6px;letter-spacing:.5px}
+  .mic-tip{font-family:'DM Sans',sans-serif;font-size:13px;color:#777;line-height:1.6}
+
+  /* OVERVIEW GRID */
+  .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+  .overview-card{background:#111115;border:1px solid #1e1e28;border-radius:10px;padding:16px}
+  .overview-icon{font-size:20px;margin-bottom:8px}
+  .overview-lbl{font-family:'Inter',sans-serif;font-size:10px;color:#444;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+  .overview-val{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#e0e0e0}
+
+  /* VIBE CARD */
+  .vibe-card{background:#111115;border:1px solid #1e1e28;border-radius:0 10px 10px 0;padding:18px 20px;margin-bottom:12px}
+  .vibe-label{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+  .vibe-ref{font-family:'Bebas Neue',sans-serif;font-size:18px;font-weight:400;letter-spacing:1px;margin-bottom:8px;color:#f0f0f0}
+  .vibe-desc{font-family:'DM Sans',sans-serif;font-size:13px;color:#888;line-height:1.7}
+
+  /* QUOTE BOX */
+  .quote-box{background:#0c0c0f;border:1px solid #e07b0055;border-radius:8px;padding:18px;font-style:italic;color:#d4a843;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.9;margin:14px 0}
+
+  /* CHECKLIST */
+  .check-item{padding:10px 0;border-bottom:1px solid #181820;font-family:'DM Sans',sans-serif;font-size:14px;color:#aaa;line-height:1.5}
+
+  /* STYLE GRID */
+  .style-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .style-box{background:#0c0c0f;border-radius:8px;padding:14px}
+  .style-lbl{font-family:'Inter',sans-serif;font-size:10px;color:#cc2222;font-weight:700;letter-spacing:2px;margin-bottom:7px;text-transform:uppercase}
+  .style-val{font-family:'DM Sans',sans-serif;font-size:13px;color:#999;line-height:1.6}
+
+  /* CAPTION ROW */
+  .cap-row{padding:12px 0;border-bottom:1px solid #181820}
+  .cap-type{font-family:'Inter',sans-serif;font-size:10px;color:#4db87a;font-weight:700;letter-spacing:2px;margin-bottom:4px;text-transform:uppercase}
+  .cap-ex{font-family:'DM Sans',sans-serif;font-size:13px;color:#aaa;font-style:italic;line-height:1.6}
+
+  /* UL */
+  .guide-ul{padding-left:20px;line-height:1;color:#aaa;font-family:'DM Sans',sans-serif;font-size:14px}
+  .guide-ul li{margin-bottom:10px;line-height:1.65}
+  .guide-ul li strong{color:#e0e0e0;font-weight:600}
+
+  p{color:#aaa;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.75;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">🏈 Flag Football League · Media Production Brief</div>
+  <div class="header-title">Lens on the Game</div>
+  <div class="header-divider">
+    <div class="header-divider-line"></div>
+    <div class="header-byline">A Shoot Day Guide by Waleed</div>
+    <div class="header-divider-line"></div>
+  </div>
+  <div class="header-sub">Sony a7 · Sideline Coverage · Reels + TikTok + Highlights</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="show('overview',this)">🎬 Overview</button>
+  <button class="tab" onclick="show('gear',this)">📷 Gear Setup</button>
+  <button class="tab" onclick="show('shots',this)">🎯 Shot List</button>
+  <button class="tab" onclick="show('mic',this)">🎙️ Mic / Player Cam</button>
+  <button class="tab" onclick="show('reels',this)">📱 Reels & TikTok</button>
+  <button class="tab" onclick="show('highlight',this)">🏆 Highlight Reel</button>
+  <button class="tab" onclick="show('spotlight',this)">⭐ Player Spotlight</button>
+  <button class="tab" onclick="show('vibe',this)">🔥 The Vibe</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="content active">
+  <div class="section-title">The Big Picture</div>
+  <div class="section-title-bar"></div>
+  <p><span style="font-family:'Bebas Neue',sans-serif;font-size:15px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:#cc2222">Media Team —</span> This is your complete guide for shoot day. The goal is to make our league look like it belongs on ESPN+ while keeping the content feel real, raw, and shareable. Think <strong style="color:#cc2222">NFL Films energy meets Instagram Reels</strong> — cinematic moments, but fast and punchy.</p>
+
+  <div class="overview-grid">
+    <div class="overview-card"><div class="overview-icon">📷</div><div class="overview-lbl">Camera</div><div class="overview-val">Sony a7</div></div>
+    <div class="overview-card"><div class="overview-icon">📱</div><div class="overview-lbl">Primary Output</div><div class="overview-val">Reels + TikTok</div></div>
+    <div class="overview-card"><div class="overview-icon">🎬</div><div class="overview-lbl">Also Shooting</div><div class="overview-val">Highlight Reel + Spotlights</div></div>
+    <div class="overview-card"><div class="overview-icon">🎙️</div><div class="overview-lbl">Mic Players</div><div class="overview-val">Tag 2–3 per game</div></div>
+  </div>
+
+  <div class="card card-accent" style="--accent:#ff2d2d">
+    <div class="card-label">Your Mindset on Shoot Day</div>
+    <ul class="guide-ul">
+      <li>You are a <strong>storyteller first</strong>, cameraman second. Capture emotion, not just action.</li>
+      <li>Always be moving. <strong>Dead still = boring clips.</strong></li>
+      <li>When in doubt, go <strong>lower and closer.</strong> Low angles = cinematic. Tight = emotion.</li>
+      <li>Shoot <strong>more than you think you need</strong>. You can always cut, you can't go back.</li>
+      <li>The best clips are <strong>unexpected</strong> — a laugh, a reaction, a look. Be ready.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- GEAR -->
+<div id="gear" class="content">
+  <div class="section-title">Sony a7 Setup for Game Day</div>
+  <div class="section-title-bar"></div>
+
+  <div class="gear-row"><div class="gear-setting">Shooting Mode</div><div class="gear-value">Continuous Burst (Hi+) for action shots · Video mode for clips</div><div class="gear-why">💡 Burst catches the exact peak moment — the flag pull, the jump catch.</div></div>
+  <div class="gear-row"><div class="gear-setting">Shutter Speed</div><div class="gear-value">1/1000s minimum for fast action</div><div class="gear-why">💡 Faster shutter = frozen motion = sharp stills. Go higher in bright sun.</div></div>
+  <div class="gear-row"><div class="gear-setting">Aperture</div><div class="gear-value">f/2.8–f/4 for blurred backgrounds · f/5.6+ for wide multi-player shots</div><div class="gear-why">💡 Low f-stop = that cinematic background blur on close-ups.</div></div>
+  <div class="gear-row"><div class="gear-setting">ISO</div><div class="gear-value">Keep under 3200 outdoors · Auto ISO is fine in good light</div><div class="gear-why">💡 Higher ISO = grainy clips. Natural light is your friend.</div></div>
+  <div class="gear-row"><div class="gear-setting">Video Frame Rate</div><div class="gear-value">60fps for everything</div><div class="gear-why">💡 60fps lets you slow down ANY clip in edit. Don't shoot at 30fps.</div></div>
+  <div class="gear-row"><div class="gear-setting">Video Resolution</div><div class="gear-value">4K if possible · 1080p minimum</div><div class="gear-why">💡 4K gives you crop flexibility when editing vertical Reels from horizontal footage.</div></div>
+  <div class="gear-row"><div class="gear-setting">Picture Profile</div><div class="gear-value">S-Log2 or S-Log3 if comfortable · Standard if not</div><div class="gear-why">💡 S-Log = more color grading range. If you're not editing, stick to Standard.</div></div>
+  <div class="gear-row"><div class="gear-setting">Stabilization (IBIS)</div><div class="gear-value">ON — always</div><div class="gear-why">💡 You'll be moving around constantly. Shaky footage kills the cinematic feel.</div></div>
+
+  <div class="card card-accent" style="--accent:#69f0ae;margin-top:20px">
+    <div class="card-label" style="color:#4db87a">Before the Game Starts — Checklist</div>
+    <div class="check-item">✅ Battery fully charged (bring backup if you have one)</div>
+    <div class="check-item">✅ SD card formatted and empty</div>
+    <div class="check-item">✅ Test video + burst mode before first snap</div>
+    <div class="check-item">✅ Mic gear ready and tested on a player</div>
+    <div class="check-item">✅ Walk the sideline — know your best angles before it matters</div>
+    <div class="check-item">✅ Pick 2 players to shadow for the day</div>
+  </div>
+</div>
+
+<!-- SHOTS -->
+<div id="shots" class="content">
+  <div class="section-title">Shot List by Priority</div>
+  <div class="section-title-bar"></div>
+  <p style="color:#888;font-size:13px;margin-bottom:20px">Every shot below should be on your mental checklist during the game.</p>
+
+  <span class="badge" style="background:#ff2d2d">🔴 Must Get</span>
+  <div class="shot-card" style="border:1px solid #cc222244">
+    <div class="shot-name">The Flag Pull</div>
+    <div class="shot-angle" style="color:#cc2222">📐 Low angle, sideline level</div>
+    <div class="shot-desc">Camera low to the ground, wide enough to catch the runner AND the defender going for the flag. The moment of the pull = freeze-worthy.</div>
+    <div class="shot-example">🎯 Think ESPN sideline cam — grass in foreground, action mid-frame.</div>
+  </div>
+  <div class="shot-card" style="border:1px solid #cc222244">
+    <div class="shot-name">QB Release</div>
+    <div class="shot-angle" style="color:#cc2222">📐 Slightly behind, tight telephoto</div>
+    <div class="shot-desc">Catch the QB's arm coming forward and the ball mid-air. Golden if you get the receiver in the same frame.</div>
+    <div class="shot-example">🎯 NFL Films style — slow mo potential. Get this on burst mode.</div>
+  </div>
+  <div class="shot-card" style="border:1px solid #cc222244">
+    <div class="shot-name">TD Celebration</div>
+    <div class="shot-angle" style="color:#cc2222">📐 Run toward the player — get close</div>
+    <div class="shot-desc">The second a TD is scored, Wahaj moves. Get the chest pump, the yell, the team mob. This is the clip everyone shares.</div>
+    <div class="shot-example">🎯 Shoot vertical for Reels. Stay close. Show emotion, not just the action.</div>
+  </div>
+  <div class="shot-card" style="border:1px solid #cc222244">
+    <div class="shot-name">Pre-snap Lineup</div>
+    <div class="shot-angle" style="color:#cc2222">📐 End zone perspective, looking down the field</div>
+    <div class="shot-desc">From behind the offense looking down the field. Shows the whole formation. Great for the cinematic feel.</div>
+    <div class="shot-example">🎯 Like a video game camera angle. Wide lens, still frame.</div>
+  </div>
+
+  <span class="badge" style="background:#ff8c00;margin-top:10px">🟠 Great to Get</span>
+  <div class="shot-card" style="border:1px solid #ff8c0044">
+    <div class="shot-name">Player Close-up</div>
+    <div class="shot-angle" style="color:#e07b00">📐 Tight on the face — between plays</div>
+    <div class="shot-desc">Catch players hyping each other up, calling plays, catching their breath. Real unscripted moments.</div>
+    <div class="shot-example">🎯 Candid. Don't stage it. This is the soul of the content.</div>
+  </div>
+  <div class="shot-card" style="border:1px solid #ff8c0044">
+    <div class="shot-name">Running Route</div>
+    <div class="shot-angle" style="color:#e07b00">📐 Tracking/follow shot</div>
+    <div class="shot-desc">Follow a receiver from the snap through their route break. Shows athleticism.</div>
+    <div class="shot-example">🎯 Requires smooth panning. Practice the movement before game time.</div>
+  </div>
+  <div class="shot-card" style="border:1px solid #ff8c0044">
+    <div class="shot-name">Interception / Big D Play</div>
+    <div class="shot-angle" style="color:#e07b00">📐 Stay wide, react fast</div>
+    <div class="shot-desc">You won't always know it's coming — stay a little wider to catch the unexpected defensive play.</div>
+    <div class="shot-example">🎯 These are the "holy shit" clips. Worth the wide trade-off.</div>
+  </div>
+
+  <span class="badge" style="background:#4fc3f7;margin-top:10px">🔵 Bonus</span>
+  <div class="shot-card" style="border:1px solid #4fc3f744">
+    <div class="shot-name">Pregame Arrival</div>
+    <div class="shot-angle" style="color:#4a9fc4">📐 Candid, walking shots</div>
+    <div class="shot-desc">Players arriving, lacing up, tossing the ball around. Sets the tone for a highlight reel opener.</div>
+    <div class="shot-example">🎯 Shoot in burst. Pick the 2–3 cleanest stills.</div>
+  </div>
+  <div class="shot-card" style="border:1px solid #4fc3f744">
+    <div class="shot-name">Team Huddle</div>
+    <div class="shot-angle" style="color:#4a9fc4">📐 Slightly elevated or sneak inside the angle</div>
+    <div class="shot-desc">Get the energy of the huddle — show the team together. Short 5-second clip.</div>
+    <div class="shot-example">🎯 Perfect Reel intro or highlight reel transition.</div>
+  </div>
+</div>
+
+<!-- MIC -->
+<div id="mic" class="content">
+  <div class="section-title">Mic & Player Cam Strategy</div>
+  <div class="section-title-bar"></div>
+  <p>Tagging players with mics is where you get the <strong style="color:#cc2222">content that separates good leagues from great ones.</strong> Pick 2–3 players per game. Ideally someone loud, funny, or a big personality.</p>
+
+  <div class="card card-accent" style="--accent:#ff8c00">
+    <div class="card-label" style="color:#e07b00">How to Brief the Miked Player</div>
+    <p style="font-size:14px;margin-bottom:10px">Tell them this before the game:</p>
+    <div class="quote-box">"Hey, you're miked up today. Just play your game — forget the mic is there. But if you score, call a play, or talk trash, <strong>own it</strong>. Between plays, talk to teammates like normal. We're not scripting anything."</div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px;font-size:20px">Key Mic Moments to Chase</div>
+  <div class="section-title-bar"></div>
+
+  <div class="mic-row">
+    <div class="mic-moment">Pre-game trash talk / hype</div>
+    <div class="mic-when">⏱ Before kickoff</div>
+    <div class="mic-tip">💡 Ask 1 player: "What's your prediction today?" — gold every time.</div>
+  </div>
+  <div class="mic-row">
+    <div class="mic-moment">Mid-game reaction after a big play</div>
+    <div class="mic-when">⏱ Immediately after a TD or big stop</div>
+    <div class="mic-tip">💡 Run up right away. "How'd that feel?" Short answer = best content.</div>
+  </div>
+  <div class="mic-row">
+    <div class="mic-moment">QB explaining the TD play</div>
+    <div class="mic-when">⏱ Sideline break</div>
+    <div class="mic-tip">💡 Have them draw the route with their hands in the air. Fans love this.</div>
+  </div>
+  <div class="mic-row">
+    <div class="mic-moment">Post-game raw reaction</div>
+    <div class="mic-when">⏱ The moment the game ends</div>
+    <div class="mic-tip">💡 Win or lose — raw emotion is the best content. Don't overthink it, just roll.</div>
+  </div>
+
+  <div class="card card-accent" style="--accent:#4fc3f7;margin-top:20px">
+    <div class="card-label" style="color:#4a9fc4">Following the Player — Camera Movement</div>
+    <ul class="guide-ul">
+      <li>Stay <strong>5–8 feet behind</strong> the player on the sideline. Close enough for audio, far enough for a good frame.</li>
+      <li>When they go on the field, <strong>track them with your lens from the sideline</strong> — you can't follow on field.</li>
+      <li>Film their <strong>sideline reactions</strong> after every play they're involved in.</li>
+      <li>Get their <strong>face AND their teammates</strong> reacting to them. Two angles of emotion = better story.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- REELS -->
+<div id="reels" class="content">
+  <div class="section-title">Reels & TikTok — Structure</div>
+  <div class="section-title-bar"></div>
+  <p style="color:#888;font-size:13px;margin-bottom:18px">Target length: <strong style="color:#e0e0e0">20–35 seconds.</strong> Every second needs to earn its place.</p>
+
+  <div class="timeline-row"><div class="timeline-time" style="background:#ff2d2d">0–2s</div><div class="timeline-body"><div class="timeline-label" style="color:#cc2222">HOOK</div><div class="timeline-desc">Best play of the day OR a face cam player hype moment. NO slow builds. Hit them instantly.</div></div></div>
+  <div class="timeline-row"><div class="timeline-time" style="background:#ff8c00">2–8s</div><div class="timeline-body"><div class="timeline-label" style="color:#e07b00">MONTAGE</div><div class="timeline-desc">3–4 rapid cuts: big play → celebration → another play. Fast-paced, music-synced.</div></div></div>
+  <div class="timeline-row"><div class="timeline-time" style="background:#ffd600">8–15s</div><div class="timeline-body"><div class="timeline-label" style="color:#d4a843">MONEY SHOT</div><div class="timeline-desc">Your cleanest slow-mo clip here — flag pull, TD catch, QB release. Let it breathe.</div></div></div>
+  <div class="timeline-row"><div class="timeline-time" style="background:#69f0ae">15–25s</div><div class="timeline-body"><div class="timeline-label" style="color:#4db87a">STORY MOMENT</div><div class="timeline-desc">Player mic moment, a reaction, or a huddle clip. Humanizes the content and hooks followers.</div></div></div>
+  <div class="timeline-row"><div class="timeline-time" style="background:#4fc3f7">25–35s</div><div class="timeline-body"><div class="timeline-label" style="color:#4a9fc4">OUTRO</div><div class="timeline-desc">League name/logo, a hype text overlay, or a call to action. Keep it clean — one element only.</div></div></div>
+
+  <div class="card card-accent" style="--accent:#ffd600;margin-top:18px">
+    <div class="card-label" style="color:#d4a843">The Formula That Works</div>
+    <p style="font-size:14px;margin:0"><strong style="color:#d4a843">Hook instantly → Build fast → Hit the slow mo → End with a reaction.</strong><br><br>The music drop should line up with your best play. Edit to the beat — cut on the downbeat. Every frame should feel intentional.</p>
+  </div>
+
+  <div class="card card-accent" style="--accent:#69f0ae;margin-top:14px">
+    <div class="card-label" style="color:#4db87a">Caption Style That Works</div>
+    <div class="cap-row"><div class="cap-type">HYPE WITH HOOK</div><div class="cap-ex">"Nobody stopping us this season 🔒 [League Name] Flag Football"</div></div>
+    <div class="cap-row"><div class="cap-type">PLAYER NAME DROP</div><div class="cap-ex">"[Player] WENT OFF today 💀 #FlagFootball"</div></div>
+    <div class="cap-row"><div class="cap-type">CHALLENGE / ENGAGEMENT</div><div class="cap-ex">"Who's catching THIS? 🤯 Comment your position 👇"</div></div>
+    <div class="cap-row"><div class="cap-type">SERIES TEASER</div><div class="cap-ex">"Full highlights dropping tomorrow 👀 [League Name]"</div></div>
+  </div>
+</div>
+
+<!-- HIGHLIGHT -->
+<div id="highlight" class="content">
+  <div class="section-title">Highlight Reel — Full Cut</div>
+  <div class="section-title-bar"></div>
+  <p style="color:#888;font-size:13px;margin-bottom:18px">Target length: <strong style="color:#e0e0e0">2–3 minutes.</strong> Lives on YouTube + Instagram + split for TikTok.</p>
+
+  <div class="card" style="border-top:3px solid #ff2d2d;overflow:hidden;padding:0">
+    <div style="background:#1a0010;padding:12px 16px;font-family:'Bebas Neue',sans-serif;font-size:13px;font-weight:800;color:#cc2222;letter-spacing:.5px">INTRO — 0:00–0:20</div>
+    <div style="padding:14px 16px"><div style="font-size:14px;color:#ddd;line-height:1.6;margin-bottom:8px">Pregame footage + hype music. Show the venue, players warming up, the vibe.</div><div style="font-size:13px;color:#888;font-style:italic">🎬 Director tip: Use a cinematic wide shot to open. No text overlays yet.</div></div>
+  </div>
+  <div class="card" style="border-top:3px solid #ff8c00;overflow:hidden;padding:0">
+    <div style="background:#1a0a00;padding:12px 16px;font-family:'Bebas Neue',sans-serif;font-size:13px;font-weight:800;color:#e07b00;letter-spacing:.5px">ACT 1 – FIRST HALF — 0:20–1:00</div>
+    <div style="padding:14px 16px"><div style="font-size:14px;color:#ddd;line-height:1.6;margin-bottom:8px">Best 6–8 plays from the first half. Mix action with reactions and celebrations.</div><div style="font-size:13px;color:#888;font-style:italic">🎬 Director tip: Every 3rd clip should be a reaction to break up the action.</div></div>
+  </div>
+  <div class="card" style="border-top:3px solid #ffd600;overflow:hidden;padding:0">
+    <div style="background:#1a1500;padding:12px 16px;font-family:'Bebas Neue',sans-serif;font-size:13px;font-weight:800;color:#d4a843;letter-spacing:.5px">ACT 2 – MIC MOMENTS — 1:00–1:30</div>
+    <div style="padding:14px 16px"><div style="font-size:14px;color:#ddd;line-height:1.6;margin-bottom:8px">2–3 mic clips back to back. Let the player's personality come through.</div><div style="font-size:13px;color:#888;font-style:italic">🎬 Director tip: Add player name lower-thirds (text overlays) here.</div></div>
+  </div>
+  <div class="card" style="border-top:3px solid #69f0ae;overflow:hidden;padding:0">
+    <div style="background:#001a0a;padding:12px 16px;font-family:'Bebas Neue',sans-serif;font-size:13px;font-weight:800;color:#4db87a;letter-spacing:.5px">ACT 3 – SECOND HALF — 1:30–2:30</div>
+    <div style="padding:14px 16px"><div style="font-size:14px;color:#ddd;line-height:1.6;margin-bottom:8px">Build to the biggest plays. Save your absolute best clip for the 2:20 mark.</div><div style="font-size:13px;color:#888;font-style:italic">🎬 Director tip: Slow mo on the clutch moments. Let the best play breathe.</div></div>
+  </div>
+  <div class="card" style="border-top:3px solid #4fc3f7;overflow:hidden;padding:0">
+    <div style="background:#001020;padding:12px 16px;font-family:'Bebas Neue',sans-serif;font-size:13px;font-weight:800;color:#4a9fc4;letter-spacing:.5px">OUTRO — 2:30–2:45</div>
+    <div style="padding:14px 16px"><div style="font-size:14px;color:#ddd;line-height:1.6;margin-bottom:8px">Final score, player of the game, league branding. Simple and clean.</div><div style="font-size:13px;color:#888;font-style:italic">🎬 Director tip: Always end on a smile or celebration. Leave people feeling good.</div></div>
+  </div>
+
+  <div class="card card-accent" style="--accent:#ff2d2d;margin-top:6px">
+    <div class="card-label">Music Strategy</div>
+    <p style="font-size:14px;line-height:1.8;margin:0">Use <strong style="color:#e0e0e0">royalty-free tracks</strong> for YouTube/Instagram to avoid muting.<br><br>Good sources: <strong style="color:#cc2222">Epidemic Sound, Artlist, or Instagram's native music library.</strong><br><br>Structure: Slow/cinematic build for pregame intro → hard drop when game action starts → quieter moment during mic audio sections.</p>
+  </div>
+</div>
+
+<!-- SPOTLIGHT -->
+<div id="spotlight" class="content">
+  <div class="section-title">Player Spotlight Videos</div>
+  <div class="section-title-bar"></div>
+  <p>Short <strong style="color:#cc2222">60–90 second</strong> videos built around one player. Think "Player of the Week." Tag them, they share it, your league grows.</p>
+
+  <div class="card card-accent" style="--accent:#ff2d2d">
+    <div class="card-label">Spotlight Video Structure</div>
+    <div class="check-item" style="display:flex;gap:12px;align-items:flex-start"><span style="background:#ff2d2d;color:#000;font-family:'Bebas Neue',sans-serif;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px">0–5s</span><span>Player name + number + position as a text overlay on a sick action shot. Cinematic opener.</span></div>
+    <div class="check-item" style="display:flex;gap:12px;align-items:flex-start"><span style="background:#ff8c00;color:#000;font-family:'Bebas Neue',sans-serif;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px">5–30s</span><span>Their best 3–4 plays from the game. Slow mo on the highlight play.</span></div>
+    <div class="check-item" style="display:flex;gap:12px;align-items:flex-start"><span style="background:#ffd600;color:#000;font-family:'Bebas Neue',sans-serif;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px">30–50s</span><span>Mic moment or a quick 10-second interview clip. Shows personality.</span></div>
+    <div class="check-item" style="display:flex;gap:12px;align-items:flex-start"><span style="background:#69f0ae;color:#000;font-family:'Bebas Neue',sans-serif;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px">50–70s</span><span>Stat line of the game — catches, TDs, flags pulled — as animated text overlays.</span></div>
+    <div class="check-item" style="display:flex;gap:12px;align-items:flex-start;border:none"><span style="background:#4fc3f7;color:#000;font-family:'Bebas Neue',sans-serif;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px">70–80s</span><span>League branding + tag the player's IG handle. Call to action.</span></div>
+  </div>
+
+  <div class="card card-accent" style="--accent:#ff8c00;margin-top:14px">
+    <div class="card-label" style="color:#e07b00">Best Spotlight Subject Checklist</div>
+    <ul class="guide-ul">
+      <li>Had a <strong>big game</strong> — 2+ TDs or multiple flag pulls</li>
+      <li>Has a <strong>big personality</strong> on camera — energy translates</li>
+      <li>Is <strong>active on social</strong> — they'll share it and tag friends</li>
+      <li>Is a <strong>recognizable player</strong> your audience already follows</li>
+    </ul>
+  </div>
+
+  <div class="card card-accent" style="--accent:#69f0ae;margin-top:14px">
+    <div class="card-label" style="color:#4db87a">Quick Interview Questions (1 take, no script)</div>
+    <div class="cap-row"><div class="cap-ex">"Walk me through that TD — what did you see?"</div></div>
+    <div class="cap-row"><div class="cap-ex">"How's the team feeling going into next week?"</div></div>
+    <div class="cap-row"><div class="cap-ex">"Who on your team should people be watching?"</div></div>
+    <div class="cap-row" style="border:none"><div class="cap-ex">"What's your goal for the rest of the season?"</div></div>
+  </div>
+</div>
+
+<!-- VIBE -->
+<div id="vibe" class="content">
+  <div class="section-title">The Vibe Reference Board</div>
+  <div class="section-title-bar"></div>
+  <p>This is the <strong style="color:#cc2222">feeling</strong> we're going for. Study these references before game day so the aesthetic is locked in your head.</p>
+
+  <div class="vibe-card" style="border-left:3px solid #cc2222"><div class="vibe-label" style="color:#cc2222">Cinematic Action</div><div class="vibe-ref">🔗 NFL Films on YouTube</div><div class="vibe-desc">Look at their slow-mo QB throws, the low-angle flag pulls, how they frame players against the sky. That's the aesthetic for our best clips.</div></div>
+  <div class="vibe-card" style="border-left:4px solid #ff8c00"><div class="vibe-label" style="color:#e07b00">Reel Energy</div><div class="vibe-ref">🔗 @overtime on Instagram</div><div class="vibe-desc">Fast cuts, music-synced transitions, quick text overlays, player reactions. This is how our short-form content should feel and move.</div></div>
+  <div class="vibe-card" style="border-left:3px solid #d4a843"><div class="vibe-label" style="color:#d4a843">Player Spotlight Style</div><div class="vibe-ref">🔗 Bleacher Report player features</div><div class="vibe-desc">See how they combine game footage with player personality. Name cards, stat overlays, real reactions. Polish meets raw.</div></div>
+  <div class="vibe-card" style="border-left:3px solid #4db87a"><div class="vibe-label" style="color:#4db87a">Mic'd Up Reference</div><div class="vibe-ref">🔗 NFL Mic'd Up series (YouTube)</div><div class="vibe-desc">Watch how they let the natural audio tell the story. They don't force it — they capture it. Same energy for our sideline mics.</div></div>
+  <div class="vibe-card" style="border-left:3px solid #4a9fc4"><div class="vibe-label" style="color:#4a9fc4">Direct Flag Football Inspo</div><div class="vibe-ref">🔗 Search "NFL Flag Football Highlights" on TikTok</div><div class="vibe-desc">See what's actually performing right now. Look at angles, music choices, caption styles. This is your direct competition for attention.</div></div>
+
+  <div class="card card-accent" style="--accent:#ff2d2d;margin-top:20px">
+    <div class="card-label">Color & Edit Style Summary</div>
+    <div class="style-grid">
+      <div class="style-box"><div class="style-lbl">COLOR GRADE</div><div class="style-val">Warm + punchy. Boost oranges/yellows on skin tones. Deep shadows. Cinematic contrast.</div></div>
+      <div class="style-box"><div class="style-lbl">SLOW MO</div><div class="style-val">Use sparingly — only on the best 2–3 moments per video. Overuse kills impact.</div></div>
+      <div class="style-box"><div class="style-lbl">CUTS</div><div class="style-val">Fast on montage sections. Let mic + reaction moments breathe with longer clips.</div></div>
+      <div class="style-box"><div class="style-lbl">TEXT OVERLAYS</div><div class="style-val">Bold, simple, all caps. Player name + stat only. No clutter, no busy graphics.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
